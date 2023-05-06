@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import org.springframework.security.core.authority.AuthorityUtils;
 
 @Entity
 @Table(name="users")
@@ -62,7 +63,14 @@ public class User {
 	public List<Role> getRoles() {
 		return roles;
 	}
+	public String getRole() {
+		return roles.get(0).getName();
+	}
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	public org.springframework.security.core.userdetails.User toAuthUser() {
+    	return new org.springframework.security.core.userdetails.User(this.username, this.password, 
+    																  AuthorityUtils.createAuthorityList(this.getRole()));
+    }
 }

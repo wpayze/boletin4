@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import es.uv.garcosda.domain.Post;
 import es.uv.garcosda.services.BlogService;
 
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,29 +30,28 @@ public class BlogRestController {
 	@Autowired private BlogService blogService;
 	
 	@GetMapping("posts")
-	public List<Post> findPosts() {
+	public Flux<Post> findPosts() {
 		LOGGER.debug("View all posts");
 		return blogService.findPosts();
 	}
 	
 	@GetMapping("posts/{id}")
-	public Optional<Post> findPostById(@PathVariable("id") Integer id) {
+	public Mono<Post> findPostById(@PathVariable("id") Integer id) {
 		LOGGER.debug("View Post id: "+id);
-		Optional<Post> post = blogService.findPostById(id);
+		Mono<Post> post = blogService.findPostById(id);
 		return post;
 	}
 	
 	@PostMapping("posts")
-	public ResponseEntity<Post> createPost(@RequestBody Post post) {
+	public Mono<Post> createPost(@RequestBody Post post) {
 		LOGGER.debug("Create post");
-		Post createdPost = blogService.createPost(post);
-		return new ResponseEntity<>(createdPost, HttpStatus.OK);
+		return blogService.createPost(post);
 	}
 			
 	@DeleteMapping("posts/{id}")
-	public void deletePostById(@PathVariable("id") Integer id) {
+	public Mono<Integer> deletePostById(@PathVariable("id") Integer id) {
 		LOGGER.debug("Delete Post id: "+id);
-		blogService.deletePost(id);
+		return blogService.deletePost(id).then(Mono.just(id));
 	}
 	
 }

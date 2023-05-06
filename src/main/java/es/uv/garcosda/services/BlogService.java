@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.uv.garcosda.domain.Post;
 import es.uv.garcosda.repositories.PostRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @Transactional
@@ -16,19 +18,19 @@ public class BlogService {
 	@Autowired
 	PostRepository postRepository;
 
-	public List<Post> findPosts() {;
+	public Flux<Post> findPosts() {;
 		return  postRepository.findAll();
 	}
 
-	public Optional<Post> findPostById(int postId) {
+	public Mono<Post> findPostById(int postId) {
 		return postRepository.findById(postId);
 	}
 
-	public Post createPost(Post post) {
+	public Mono<Post> createPost(Post post) {
 		return postRepository.save(post);
 	}
 
-	public void deletePost(Integer postId) {
-		postRepository.deleteById(postId);
+	public Mono<Void> deletePost(Integer postId) {
+		return postRepository.deleteById(postId);
 	}
 }

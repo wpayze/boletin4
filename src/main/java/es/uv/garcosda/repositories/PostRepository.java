@@ -1,9 +1,9 @@
 package es.uv.garcosda.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
 import es.uv.garcosda.domain.Post;
 
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
 
 }
