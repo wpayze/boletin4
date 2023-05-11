@@ -1,76 +1,90 @@
 package es.uv.garcosda.domain;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-@Entity
-@Table(name="users")
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Table(name = "USERS")
 public class User {
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+
+	@Id
+	@JsonProperty("id")
 	private Integer id;
-	
-	@Column(nullable=false)
+
+	@JsonProperty("name")
 	private String name;
-	
-	@Column(nullable=false, unique=true)
+
+	@JsonProperty("username")
 	private String username;
-	
-	@Column(nullable=false)
+
+	@JsonProperty("password")
 	private String password;
-	
-	@ManyToMany(cascade=CascadeType.MERGE)
-	@JoinTable(name="user_role",
-	           joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-	           inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
-	private List<Role> roles;
-	
+
+	@JsonProperty("role")
+	private String role;
+
+	public User() {
+	}
+
+	public User(Integer id, String name, String username, String password, String role) {
+		this.id = id;
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+
+	public User(String name, String username, String password, String role) {
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<Role> getRoles() {
-		return roles;
-	}
+
 	public String getRole() {
-		return roles.get(0).getName();
+		return role;
 	}
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+
+	public void setRole(String roles) {
+		this.role = roles;
 	}
+
 	public org.springframework.security.core.userdetails.User toAuthUser() {
-    	return new org.springframework.security.core.userdetails.User(this.username, this.password, 
-    																  AuthorityUtils.createAuthorityList(this.getRole()));
-    }
+		return new org.springframework.security.core.userdetails.User(this.username, this.password,
+				AuthorityUtils.createAuthorityList(this.getRole()));
+	}
 }

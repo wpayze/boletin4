@@ -3,46 +3,33 @@ package es.uv.garcosda.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Entity
 @Table(name = "POSTS")
 public class Post implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@SequenceGenerator(name="id_post_generator", sequenceName = "id_post_seq", allocationSize=50, initialValue=4)
-	@Column(name = "post_id")
+	@JsonProperty("id")
 	private Integer id;
-	
-	@Column(name = "title", nullable = false, length = 150)
+
+	@JsonProperty("title")
 	private String title;
-	
-	@Lob
-	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
+
+	@JsonProperty("content")
 	private String content;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_on")
+
+	@JsonProperty("created_on")
 	private Date createdOn = new Date();
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_on")
+
+	@JsonProperty("updated_on")
 	private Date updatedOn;
 
-	public Post() { }
+	public Post() {
+	}
 
 	public Post(Integer postId) {
 		this.id = postId;
@@ -86,5 +73,15 @@ public class Post implements Serializable {
 
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public String toString() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			return objectMapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 }
