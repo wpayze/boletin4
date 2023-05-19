@@ -1,0 +1,2 @@
+{"id": 1,"title": "Post 1","content": "Contenido del post 1","created_on": "2023-02-11T15:00:00Z","updated_on": ""}
+{"id": 2,"title": "Post 2","content": "Contenido del post 2","created_on": "2023-06-01T19:00:00Z","updated_on": ""}
