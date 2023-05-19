@@ -5,8 +5,8 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
     content VARCHAR(1024),
-    created_on TIMESTAMP,
-    updated_on TIMESTAMP
+    created_on VARCHAR(255),
+    updated_on VARCHAR(255)
 );
 
 CREATE TABLE users (

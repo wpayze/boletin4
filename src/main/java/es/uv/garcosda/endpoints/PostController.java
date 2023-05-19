@@ -32,7 +32,7 @@ public class PostController {
 
     @PostMapping()
     public Mono<Post> insert(@RequestBody Post post) {
-        post.setCreatedOn(new Date());
+        post.setCreatedOn(new Date().toString());
         return this.postService.insert(post);
     }
 

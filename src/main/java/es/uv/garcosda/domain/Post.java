@@ -23,10 +23,10 @@ public class Post implements Serializable {
 	private String content;
 
 	@JsonProperty("created_on")
-	private Date createdOn = new Date();
+	private String createdOn = new Date().toString();
 
 	@JsonProperty("updated_on")
-	private Date updatedOn;
+	private String updatedOn;
 
 	public Post() {
 	}
@@ -59,19 +59,19 @@ public class Post implements Serializable {
 		this.content = content;
 	}
 
-	public Date getCreatedOn() {
+	public String getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Date getUpdatedOn() {
+	public String getUpdatedOn() {
 		return updatedOn;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
+	public void setUpdatedOn(String updatedOn) {
 		this.updatedOn = updatedOn;
 	}
 

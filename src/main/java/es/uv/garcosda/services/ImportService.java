@@ -37,7 +37,6 @@ public class ImportService {
 	    for (String e : lines) {
 	    	Post x = mapper.readValue(e, Post.class);
 	    	x.setId(null);
-	    	//System.out.println(x);
 	        docs.add(x);
 	    }
 	    System.out.println("[I] ImportService: readed "+docs.size()+" items");
