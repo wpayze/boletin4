@@ -1,16 +1,14 @@
 package es.uv.garcosda.endpoints;
 
-import java.util.Date;
-
+import es.uv.garcosda.domain.Post;
+import es.uv.garcosda.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.server.ServerResponse;
-
-import es.uv.garcosda.domain.Post;
-import es.uv.garcosda.services.PostService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/posts")
